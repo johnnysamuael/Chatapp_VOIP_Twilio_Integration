@@ -94,5 +94,7 @@ return callback(null, response);
   - Make a Node/Express JS app with a custom dialer (using css and html) that can connect with the twilio backend.
 - ### Configure Firebase for the chat functionality with firestore to store the data/blobs
 ## Demo
+<p align="center">
+<img src="images/dialermockup.gif" alt="Dialer Iphone Mockup" width="380" height = "670"> <img src="images/demo-voip.gif" width="400" height = "700">
 
-<img src="images/dialermockup.gif" alt="Dialer Iphone Mockup">
+</p>
