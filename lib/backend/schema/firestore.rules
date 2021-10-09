@@ -1,0 +1,60 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function userDoc() {
+      return /databases/$(database)/documents/users/$(request.auth.uid);
+    }
+
+    match /users/{userId} {
+      allow read: if true;
+      allow create, update: if request.auth.uid == userId;
+    }
+
+    match /chats/{id} {
+      allow read, update: if userDoc() in resource.data.users;
+      allow create: if userDoc() in request.resource.data.users;
+    }
+
+    match /chat_messages/{id} {
+      allow read: if userDoc() in get(resource.data.chat).data.users;
+      allow create: if userDoc() in get(request.resource.data.chat).data.users &&
+                       userDoc() == request.resource.data.user;
+    }
+
+    // WARNING! ONLY FOR TEST MODE: Make sure you properly configure the
+    // security rules for this collection before publishing your app.
+    match /userPosts/{id} {
+      allow read, write: if true;
+    }
+
+    // WARNING! ONLY FOR TEST MODE: Make sure you properly configure the
+    // security rules for this collection before publishing your app.
+    match /postComments/{id} {
+      allow read, write: if true;
+    }
+
+    // WARNING! ONLY FOR TEST MODE: Make sure you properly configure the
+    // security rules for this collection before publishing your app.
+    match /userStories/{id} {
+      allow read, write: if true;
+    }
+
+    // WARNING! ONLY FOR TEST MODE: Make sure you properly configure the
+    // security rules for this collection before publishing your app.
+    match /storyComments/{id} {
+      allow read, write: if true;
+    }
+
+    // WARNING! ONLY FOR TEST MODE: Make sure you properly configure the
+    // security rules for this collection before publishing your app.
+    match /dogs/{id} {
+      allow read, write: if true;
+    }
+
+    // WARNING! ONLY FOR TEST MODE: Make sure you properly configure the
+    // security rules for this collection before publishing your app.
+    match /friends/{id} {
+      allow read, write: if true;
+    }
+  }
+}
